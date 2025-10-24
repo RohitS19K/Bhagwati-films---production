@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Services — Bhagwati Productions</title>
+
+<!-- GSAP (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
+
+<style>
+/* ---------- Reset & Font ---------- */
+@font-face {
+  font-family:'Satoshi';
+  src: url('https://cdn.jsdelivr.net/gh/weiweihuanghuang/variable-satoshi/Satoshi-Variable.woff2')
+       format('woff2-variations');
+  font-weight:300 900;
+  font-display:swap;
+}
+
+:root{
+  --bg:#0f0f10;
+  --muted:rgba(255,255,255,0.75);
+  --accent:#ff5722;
+  --white:#ffffff;
+  --container:1100px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Satoshi',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+
+/* ---------- Header ---------- */
+.header{
+  position:fixed;top:0;left:0;right:0;height:80px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 5%;
+  backdrop-filter:blur(6px);
+  z-index:60;
+}
+.brand-logo{height:48px}
+.nav{display:flex;gap:1.25rem;align-items:center;}
+.nav a{
+  color:var(--muted);font-weight:600;font-size:.95rem;
+  position:relative;padding:.25rem .15rem;
+  transition:color .25s ease, transform .12s ease;
+}
+.nav a:hover{color:var(--white);transform:translateY(-2px)}
+.nav a::after{
+  content:'';position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--white);
+  transition:width .25s ease;
+}
+.nav a:hover::after{width:100%}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:45vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:6rem 5% 3rem;
+  margin-top:80px;
+  position:relative;
+  background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.65));
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:url('images/services-hero.jpg') center/cover no-repeat;
+  opacity:.3;filter:grayscale(.1) contrast(.9);
+  z-index:-1;
+}
+.hero h1{
+  font-size:clamp(2.2rem,6vw,3.6rem);
+  letter-spacing:-1px;
+  text-align:center;
+}
+
+/* ---------- Services Narrative ---------- */
+.container{max-width:var(--container);margin:0 auto;padding:4rem 5%;}
+.service-block{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:3rem;
+  margin-bottom:5rem;
+  flex-wrap:wrap;
+}
+.service-block:nth-child(even) .service-image{order:2;} /* alternate sides */
+.service-text{flex:1 1 480px;}
+.service-text h2{
+  font-size:2rem;
+  margin-bottom:1rem;
+}
+.service-text p{
+  color:var(--muted);
+  font-size:1.05rem;
+}
+.service-image{
+  flex:1 1 420px;
+}
+.service-image img{
+  width:100%;
+  border-radius:12px;
+  box-shadow:0 12px 28px rgba(0,0,0,0.4);
+}
+
+/* Footer */
+.footer{
+  text-align:center;padding:2.5rem 1rem;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,0.03);
+  margin-top:4rem;
+}
+
+/* Reveal helper */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .75s ease, transform .75s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media (max-width:880px){
+  .hero{padding:4.5rem 5%}
+  .service-block{flex-direction:column;}
+  .service-block:nth-child(even) .service-image{order:0;}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="index.html"><img class="brand-logo" src="images/Bhagwati logo.png" alt="Bhagwati Productions logo"></a>
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="index.html#recent-sites-section">Work</a>
+    <a href="services.html" aria-current="page">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <h1 class="reveal">What We Offer</h1>
+</section>
+
+<section class="container">
+  <div class="service-block reveal">
+    <div class="service-text">
+      <h2>Film & Video Production</h2>
+      <p>From commercials to feature-length narratives, we manage every aspect of production—scripting, direction, cinematography and on-set logistics—ensuring your story is captured with cinematic precision.</p>
+    </div>
+    <div class="service-image">
+      <img src="images/service1.jpg" alt="Film & Video Production">
+    </div>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-text">
+      <h2>Music Video Creation</h2>
+      <p>Our team crafts visually arresting music videos that elevate the artist’s sound and connect deeply with audiences, blending rhythm, visuals and narrative flair.</p>
+    </div>
+    <div class="service-image">
+      <img src="images/service2.jpg" alt="Music Video Production">
+    </div>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-text">
+      <h2>Post-Production & Editing</h2>
+      <p>From meticulous editing to color grading and sound design, our post-production process polishes each frame and delivers a seamless, compelling final cut.</p>
+    </div>
+    <div class="service-image">
+      <img src="images/service3.jpg" alt="Post-Production & Editing">
+    </div>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-text">
+      <h2>Advertising & Brand Films</h2>
+      <p>We create high-impact ad films and branded content that encapsulate your brand’s voice, ensuring every second resonates with your audience and drives engagement.</p>
+    </div>
+    <div class="service-image">
+      <img src="images/service4.jpg" alt="Advertising & Brand Films">
+    </div>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-text">
+      <h2>Event Coverage & Live Production</h2>
+      <p>Our crew captures events with multi-camera setups and cinematic quality—live streaming or recorded—to immortalise the energy and key moments of your occasion.</p>
+    </div>
+    <div class="service-image">
+      <img src="images/service5.jpg" alt="Event Coverage & Live Production">
+    </div>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-text">
+      <h2>Creative Consulting & Strategy</h2>
+      <p>We partner with brands and agencies to shape impactful visual storytelling strategies, guiding projects from concept to campaign execution.</p>
+    </div>
+    <div class="service-image">
+      <img src="images/service6.jpg" alt="Creative Consulting & Strategy">
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <small>&copy; <span id="year"></span> Bhagwati Productions • All rights reserved.</small>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+(function(){
+  function fallbackReveal(){
+    document.querySelectorAll('.reveal').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('visible'),150 + i*90);
+    });
+  }
+  window.addEventListener('load',function(){
+    try{
+      if(typeof gsap!=='undefined' && typeof ScrollTrigger!=='undefined'){
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal').forEach((el,i)=>{
+          gsap.fromTo(el,{y:24,opacity:0},{
+            y:0,opacity:1,duration:0.9,ease:'power3.out',
+            delay:i*0.06,
+            scrollTrigger:{
+              trigger:el,
+              start:'top 85%',
+              toggleActions:'play none none reverse'
+            }
+          });
+        });
+      } else {fallbackReveal();}
+    }catch(e){console.warn('GSAP init failed',e);fallbackReveal();}
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhagwati Productions - Digital Creatives</title>
+
+    <link rel="icon" type="image/png" href="/Images/Bhagwati logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+
+
+    <style>
+        /* --- Font Import & General Styles --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #f7f7f7;
+            --secondary-color: #1a1a1a;
+            --accent-color: #ff5722;
+            --font-family-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            font-family: var(--font-family-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Custom Cursor --- */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        /* .custom-cursor.hover {
+            width: 80px;
+            height: 80px;
+            background-color: var(--accent-color);
+            mix-blend-mode: exclusion;
+        } */
+
+        /* --- Header & Hero Section --- */
+    .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5%;
+    z-index: 1000;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    /* background: rgba(255, 255, 255, 0.95); optional: keeps header visible when transparent */
+  }
+
+  .header.hidden {
+    opacity: 0;
+    transform: translateY(-100%);
+    z-index: 0; /* moves it behind content */
+  }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            margin-left: 2rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+    position: relative;              /* make it a positioning context */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 5%;
+    overflow: hidden;                /* hide any overflow of the video */
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;               /* fill the area like a background image */
+    z-index: -1;                     /* keep video behind text */
+}
+
+.hero h1,
+.hero p {
+    position: relative;              /* keep text above video */
+    z-index: 1;
+}
+
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInTranslate 1s ease-out forwards;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            max-width: 600px;
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInTranslate 1s 0.3s ease-out forwards;
+        }
+
+        /* --- Nominees Section (Featured & Grid) --- */
+        .nominees,
+        .recent-sites,
+        .services-section {
+            padding: 5rem 5%;
+        }
+
+        .nominees-intro {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .nominees h2,
+        .services-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 3rem;
+        }
+
+        .nominees-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .nominees-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .nominee-card {
+            background-color: #2a2a2a;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nominee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .nominee-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .nominee-card.large img {
+            height: 500px;
+        }
+
+        .nominee-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .nominee-content {
+            padding: 1.5rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .nominee-content h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .nominee-meta {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .nominee-meta span:first-child {
+            margin-right: 1rem;
+            position: relative;
+        }
+
+        .nominee-meta span:first-child::after {
+            content: '—';
+            margin-left: 0.5rem;
+        }
+
+        .other-nominees {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .other-nominees .nominee-card img {
+            height: 250px;
+        }
+
+        .other-nominees .nominee-content h3 {
+            font-size: 1.2rem;
+        }
+
+        .other-nominees .nominee-content p {
+            font-size: 0.8rem;
+        }
+
+        .view-all-link {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .view-all-link:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* --- Recent Sites Section (Projects) --- */
+        .recent-sites-title {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .site-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .site-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .site-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .site-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .site-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .site-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            color: var(--primary-color);
+        }
+
+        .site-card:hover .site-card-content {
+            transform: translateY(0);
+        }
+
+        .site-card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .site-card-content span {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            display: block;
+        }
+
+        /* --- New Services Section --- */
+        .services-section {
+            text-align: center;
+        }
+
+        .services-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background-color: #2a2a2a;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            max-width: 350px;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 3rem 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 5rem;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .footer-logo img{
+            height: 80px;
+            width: auto;
+        }
+
+
+        /* --- Animations (Scroll-triggered) --- */
+        .animated {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animated.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .nominees h2.animated.visible,
+        .services-title.animated.visible {
+            transition-delay: 0.1s;
+        }
+
+        .nominee-card:nth-child(1).animated.visible {
+            transition-delay: 0.2s;
+        }
+
+        .nominee-card:nth-child(2).animated.visible {
+            transition-delay: 0.3s;
+        }
+
+        .nominee-card:nth-child(3).animated.visible {
+            transition-delay: 0.4s;
+        }
+
+        .view-all-link.animated.visible {
+            transition-delay: 0.5s;
+        }
+
+        .recent-sites-title.animated.visible {
+            transition-delay: 0.1s;
+        }
+
+        .site-card:nth-child(1).animated.visible {
+            transition-delay: 0.2s;
+        }
+
+        .site-card:nth-child(2).animated.visible {
+            transition-delay: 0.3s;
+        }
+
+        .site-card:nth-child(3).animated.visible {
+            transition-delay: 0.4s;
+        }
+
+        .site-card:nth-child(4).animated.visible {
+            transition-delay: 0.5s;
+        }
+
+        .site-card:nth-child(5).animated.visible {
+            transition-delay: 0.6s;
+        }
+
+        .site-card:nth-child(6).animated.visible {
+            transition-delay: 0.7s;
+        }
+
+        .service-card:nth-child(1).animated.visible {
+            transition-delay: 0.2s;
+        }
+
+        .service-card:nth-child(2).animated.visible {
+            transition-delay: 0.3s;
+        }
+
+        .service-card:nth-child(3).animated.visible {
+            transition-delay: 0.4s;
+        }
+
+        @keyframes fadeInTranslate {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @font-face {
+            font-family: 'Satoshi';
+            src: url('/fonts/Satoshi-Variable.woff2') format('woff2-variations');
+            font-weight: 300 700;
+            font-display: swap;
+        }
+
+        .featured-works {
+            font-family: 'Satoshi', sans-serif;
+            padding: 4rem 2rem;
+            background: #fafafa;
+            /* light theme – change if you prefer dark */
+        }
+
+        .featured-works .section-title {
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            cursor: pointer;
+            transition: transform .3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .work-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .work-card .card-content {
+            padding: 1.2rem;
+        }
+
+        .work-card .title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 0.4rem;
+        }
+
+        .work-card .desc {
+            font-size: 0.95rem;
+            color: #555;
+            margin: 0;
+        }
+
+        @font-face {
+            font-family: 'Satoshi';
+            src: url('/fonts/Satoshi-Variable.woff2') format('woff2-variations');
+            font-weight: 300 700;
+            font-display: swap;
+        }
+
+        .featured-works {
+            font-family: 'Satoshi', sans-serif;
+            padding: 4rem 2rem;
+            background: #fafafa;
+            /* light theme – change if you prefer dark */
+        }
+
+        .featured-works .section-title {
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            cursor: pointer;
+            transition: transform .3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .work-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .work-card .card-content {
+            padding: 1.2rem;
+        }
+
+        .work-card .title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 0.4rem;
+        }
+
+        .work-card .desc {
+            font-size: 0.95rem;
+            color: #555;
+            margin: 0;
+        }
+
+        .brand-logo {
+            height: 100px;
+            /* adjust to fit header */
+            width: auto;
+            display: block;
+        }
+
+        /* Featured Works – smoother UI */
+        .featured-works {
+            font-family: 'Satoshi', sans-serif;
+            padding: 5rem 2rem;
+            background: #111;
+            /* match dark theme */
+        }
+
+        .featured-works .section-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #fff;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+        }
+
+        .work-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform .5s ease;
+        }
+
+        .work-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .work-card .card-content {
+            padding: 1.5rem;
+        }
+
+        .work-card .title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #111;
+        }
+
+        .work-card .desc {
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .about-section {
+            background: #111;
+            /* keeps dark theme */
+            padding: 6rem 5%;
+            overflow: hidden;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            flex: 1 1 450px;
+            color: #f7f7f7;
+        }
+
+        .about-text h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0.85;
+        }
+
+        .about-cta {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            margin-top: 1rem;
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all .3s ease;
+        }
+
+        .about-cta:hover {
+            background: #fff;
+            color: #111;
+            transform: translateY(-3px);
+        }
+
+        .about-image {
+            flex: 1 1 400px;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transform: scale(1.05);
+            transition: transform 1s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.1);
+        }
+
+        /* GSAP scroll animation hook */
+        .animated {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .animated.visible {
+            opacity: 1;
+            transform: none;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        /* footer */
+    .detailed-footer {
+    padding: 4rem 5%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #111111; /* Slightly darker than body */
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.copyright-text {
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+.footer-nav-col h3, .footer-social-col h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.footer-nav-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-nav-col li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-link {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.footer-link:hover {
+    opacity: 1;
+    color: var(--accent-color);
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-icon {
+    font-size: 1.5rem;
+    opacity: 0.6;
+}
+
+.social-icon:hover {
+    opacity: 1;
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.cta-link {
+    display: inline-block;
+    padding: 0.5rem 0;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.cta-link:hover {
+    color: var(--primary-color);
+    border-bottom-color: var(--accent-color);
+}
+        /* footer */
+        /* -------------------------
+
+        
+   Go-to-Top Button
+------------------------- */
+#toTopBtn{
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--white);
+  font-size: 1.4rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,.5);
+  transition: opacity .3s ease, transform .25s ease, background .25s ease;
+  z-index: 150;
+}
+#toTopBtn:hover{
+  background: var(--accent);
+  transform: translateY(-4px);
+}
+#toTopBtn.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* -------------------------
+   OTT Partners Section
+------------------------- */
+/* -------------------------
+   OTT Partners – Showcase
+------------------------- */
+.ott-showcase{
+  padding:6rem 5%;
+  max-width:var(--container);
+  margin:0 auto;
+}
+.ott-head{
+  text-align:center;
+  margin-bottom:4rem;
+}
+.ott-head h2{
+  font-size:clamp(2rem,5vw,3.2rem);
+  letter-spacing:-1px;
+  margin-bottom:1rem;
+}
+.ott-head p{
+  color:var(--muted);
+  font-size:1.1rem;
+  max-width:700px;
+  margin:0 auto;
+}
+
+.ott-wrap{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:2.5rem;
+}
+
+.ott-card{
+  width:180px;
+  height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 12px 32px rgba(0,0,0,.4);
+  transition:transform .35s cubic-bezier(.2,.9,.22,1),
+             box-shadow .35s ease,
+             background .35s ease;
+}
+.ott-card img{
+  max-width:70%;
+  max-height:70%;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));
+}
+.ott-card:hover{
+  transform:translateY(-10px) scale(1.05);
+  background:rgba(255,255,255,0.08);
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
+}
+
+@media(max-width:600px){
+  .ott-card{width:42%;height:100px;}
+}
+
+/* fallback reveal if GSAP not loaded */
+.reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .75s ease,transform .75s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* -------------------------
+   E-Commerce Slider
+------------------------- */
+.ecom-slider{
+  padding:6rem 5%;
+  max-width:var(--container);
+  margin:0 auto;
+}
+.ecom-head{
+  text-align:center;
+  margin-bottom:3rem;
+}
+.ecom-head h2{
+  font-size:clamp(2rem,5vw,3rem);
+  letter-spacing:-1px;
+  margin-bottom:1rem;
+}
+.ecom-head p{
+  color:var(--muted);
+  font-size:1.1rem;
+  max-width:700px;
+  margin:0 auto;
+}
+/* our work */
+
+    .works-section {
+      padding: 80px 5%;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+
+    /* Grid Layout */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    /* Full Image Cards */
+    .work-card {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      opacity: 0; /* for GSAP animation */
+      transform: translateY(40px);
+    }
+
+    .work-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, opacity 0.4s ease;
+    }
+
+    .work-card:hover img {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+
+    /* Responsive Tweaks */
+    @media (max-width: 768px) {
+      .work-card {
+        height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .work-card {
+        height: 200px;
+      }
+    }
+/* our work */
+
+
+/* Swiper overrides for dark theme */
+.ecomSwiper{
+  width:100%;
+  padding-bottom:3rem;
+}
+.ecomSwiper .swiper-slide{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.ecomSwiper img{
+  max-width:140px;
+  max-height:80px;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));
+  transition:transform .3s ease;
+}
+.ecomSwiper img:hover{ transform:scale(1.05); }
+
+.swiper-button-prev,
+.swiper-button-next{
+  color:var(--white);
+}
+.swiper-pagination-bullet{
+  background:var(--white);
+  opacity:.4;
+}
+.swiper-pagination-bullet-active{
+  opacity:1;
+}
+
+/* services */
+.services-grid-section-new {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    padding: 50px;
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    justify-items: center;
+}
+
+.service-card-new.grid-card-new {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    max-width: 450px;
+    background-color: #242424;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.service-card-new.grid-card-new:hover {
+    transform: translateY(-10px);
+}
+
+.card-video-new {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.service-card-new.grid-card-new:hover .card-video-new {
+    opacity: 1;
+}
+
+.card-content-new {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+    transition: background 0.5s ease;
+}
+
+.service-card-new.grid-card-new:hover .card-content-new {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.card-icon-new {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+    color: #ff5722;
+    transition: transform 0.3s ease;
+}
+
+.service-card-new.grid-card-new:hover .card-icon-new {
+    transform: scale(1.1);
+}
+
+h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #ccc;
+}
+/* services end */
+
+/* fallback reveal */
+.reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .75s ease,transform .75s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="custom-cursor"></div>
+    <header class="header">
+        <a href="#" class="logo">
+            <img src="Images/Bhagwati-logo.png" alt="Bhagwati Productions Logo" class="brand-logo">
+        </a>
+        <nav>
+            <a href="#nominees-section" class="nav-link">Nominees</a>
+            <a href="#recent-sites-section" class="nav-link">Recent Work</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="gallery.html" class="nav-link">Gallery</a>
+            <a href="Contact.html" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+
+    <section class="hero">
+    <!-- 🔽 Background video element -->
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="Images/BTS.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- existing hero text stays the same -->
+    <h1>Crafting Stories Through Visuals</h1>
+    <p>Innovative film and video production for a digital world. We transform ideas into stunning cinematic experiences.</p>
+</section>
+
+    <!-- === ABOUT US SECTION === -->
+    <section id="about" class="about-section">
+        <div class="about-content">
+            <div class="about-text animated">
+                <h2>About Bhagwati Productions</h2>
+                <p>
+                    We are a full-service film & digital production house creating
+                    cinematic stories that connect brands and audiences.
+                    From concept development to final color grade, our team of
+                    directors, cinematographers and editors craft visuals that stay
+                    with viewers long after the credits roll.
+                </p>
+
+                <p>
+                    Whether it’s a feature film, commercial, or music video,
+                    we blend artistic vision with cutting-edge technology to deliver
+                    powerful experiences across every screen.
+                </p>
+
+                <a href="#contact" class="about-cta">Start a Project</a>
+            </div>
+
+            <div class="about-image animated">
+                <img src="/Images/about-section-image.png" alt="Bhagwati Productions Team">
+            </div>
+        </div>
+    </section>
+   <!-- =======================
+     OTT PARTNERS
+======================= -->
+<!-- =======================
+     OTT PARTNERS – SHOWCASE
+======================= -->
+<section class="ott-showcase container" aria-labelledby="ott-showcase-title">
+  <div class="ott-head reveal">
+    <h2 id="ott-showcase-title">Our OTT Partners</h2>
+    <p>
+      We proudly collaborate with the world’s leading OTT platforms to stream
+      our stories to millions of viewers.
+    </p>
+  </div>
+
+  <div class="ott-wrap">
+    <div class="ott-card reveal"><img src="/Images/netflix.png" alt="Netflix"></div>
+    <div class="ott-card reveal"><img src="/Images/sony liv.png" alt="Sony Liv"></div>
+    <div class="ott-card reveal"><img src="/Images/zee5.png" alt="Zee5"></div>
+    <div class="ott-card reveal"><img src="/Images/Eros Now.png" alt="Eros Now"></div>
+    <div class="ott-card reveal"><img src="/Images/ALT.png" alt="ALT Balaji"></div>
+    <div class="ott-card reveal"><img src="/Images/shemaroo.png" alt="Shemaroo TV"></div>
+    <div class="ott-card reveal"><img src="/Images/prime video.png" alt="Prime Video"></div>
+    <div class="ott-card reveal"><img src="/Images/Amazon miniTV.png" alt="Amazon miniTV"></div>
+    <div class="ott-card reveal"><img src="/Images/star plus.png" alt="Star Plus"></div>
+    <div class="ott-card reveal"><img src="/Images/Ullu.png" alt="Ullu"></div>
+    <div class="ott-card reveal"><img src="/Images/Jio Cinema.png" alt="Jio Cinema"></div>
+    <div class="ott-card reveal"><img src="/Images/Mx Player.png" alt="MX Player"></div>
+    <div class="ott-card reveal"><img src="/Images/Voot.png" alt="Voot"></div>
+    <div class="ott-card reveal"><img src="/Images/colors.png" alt="Colors"></div>
+    
+  </div>
+</section>
+
+
+
+    <section id="nominees-section" class="nominees">
+        <span class="nominees-intro animated">Vote for the best work by Bhagwati Productions</span>
+        <h2 class="animated">Featured Projects</h2>
+        <div class="nominees-grid">
+            <div class="nominee-card large animated">
+                <a href="#">
+                    <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?q=80&w=2940&auto=format&fit=crop"
+                        alt="Featured Project: The Future Blueprint">
+                    <div class="nominee-content">
+                        <h3>The Future Blueprint</h3>
+                        <p>A visionary documentary exploring sustainable urban development.</p>
+                        <div class="nominee-meta">
+                            <span>Documentary</span>
+                            <span>Bhagwati Team</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="other-nominees">
+                <div class="nominee-card animated">
+                    <a href="#">
+                        <img src="https://images.unsplash.com/photo-1629731238628-98e2190f8423?q=80&w=2940&auto=format&fit=crop"
+                            alt="Nominee 1: Cosmic Harmonies">
+                        <div class="nominee-content">
+                            <h3>Cosmic Harmonies</h3>
+                            <p>An immersive visual experience for a classical orchestra.</p>
+                            <div class="nominee-meta">
+                                <span>Art Film</span>
+                                <span>Music Collective</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nominee-card animated">
+                    <a href="#">
+                        <img src="https://images.unsplash.com/photo-1542204165-8b92b67d5830?q=80&w=2940&auto=format&fit=crop"
+                            alt="Nominee 2: Echoes of the Past">
+                        <div class="nominee-content">
+                            <h3>Echoes of the Past</h3>
+                            <p>A historical drama capturing untold stories.</p>
+                            <div class="nominee-meta">
+                                <span>Period Drama</span>
+                                <span>Heritage Foundation</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="view-all-link animated">View All Projects</a>
+    </section>
+
+    <section id="recent-sites-section" class="recent-sites">
+        <h2 class="recent-sites-title animated">Recent Works of Bhagwati Productions.</h2>
+        <div class="site-grid">
+            <div class="site-card animated">
+                <a href="#">
+                    <img src="/Images/Wild-life-documentary.png"
+                        alt="Site 1: Green Earth Campaign">
+                    <div class="site-card-content">
+                        <h3>Green Earth Campaign</h3>
+                        <span>Environmental Ad, 2024</span>
+                    </div>
+                </a>
+            </div>
+            <div class="site-card animated">
+                <a href="#">
+                    <img src="https://images.unsplash.com/photo-1522867809919-450a8b9e6918?q=80&w=2940&auto=format&fit=crop"
+                        alt="Site 2: Urban Pulse Music Video">
+                    <div class="site-card-content">
+                        <h3>Urban Pulse Music Video</h3>
+                        <span>Music Video, 2023</span>
+                    </div>
+                </a>
+            </div>
+            <div class="site-card animated">
+                <a href="#">
+                    <img src="/Images/Food.png"
+                        alt="Site 3: Culinary Journey Series">
+                    <div class="site-card-content">
+                        <h3>Culinary Journey Series</h3>
+                        <span>Food Documentary, 2024</span>
+                    </div>
+                </a>
+            </div>
+            <div class="site-card animated">
+                <a href="#">
+                    <img src="https://images.unsplash.com/photo-1511216124706-03f29555de04?q=80&w=2940&auto=format&fit=crop"
+                        alt="Site 4: Tech Innovation Summit">
+                    <div class="site-card-content">
+                        <h3>Tech Innovation Summit</h3>
+                        <span>Event Promo, 2023</span>
+                    </div>
+                </a>
+            </div>
+            <div class="site-card animated">
+                <a href="#">
+                    <img src="Images/forest.png"
+                        alt="Site 5: Wildlife Conservation">
+                    <div class="site-card-content">
+                        <h3>Wildlife Conservation</h3>
+                        <span>Short Film, 2024</span>
+                    </div>
+                </a>
+            </div>
+            <div class="site-card animated">
+                <a href="#">
+                    <img src="/Images/Street.png"
+                        alt="Site 6: Art in Motion">
+                    <div class="site-card-content">
+                        <h3>Art in Motion</h3>
+                        <span>Creative Ad, 2023</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+<!-- =======================
+     OTT PARTNERS
+======================= -->
+<!-- =======================
+     E-COMMERCE PARTNERS SLIDER
+======================= -->
+<section class="ecom-slider container" aria-labelledby="ecom-title">
+  <div class="ecom-head reveal">
+    <h2 id="ecom-title">Our E-Commerce Partners</h2>
+    <p>
+      Trusted by leading marketplaces to deliver premium visual content.
+    </p>
+  </div>
+
+  <!-- Swiper -->
+  <div class="swiper ecomSwiper reveal">
+    <div class="swiper-wrapper">
+      <!-- Replace logo src paths with your own -->
+      <div class="swiper-slide"><img src="Images/E-com/Amazon.png" alt="Amazon"></div>
+      <div class="swiper-slide"><img src="Images/E-com/Flipkart.png" alt="Flipkart"></div>
+      <div class="swiper-slide"><img src="Images/E-com/Myntra.png" alt="Myntra"></div>
+      <div class="swiper-slide"><img src="Images/E-com/Ajio.png" alt="Ajio"></div>
+      <div class="swiper-slide"><img src="Images/E-com/Shopclues.png" alt="Shopclues"></div>
+      <div class="swiper-slide"><img src="Images/E-com/Snapdeal.png" alt="Snapdeal"></div>
+      <div class="swiper-slide"><img src="Images/E-com/Tata-CliQ.png" alt="TataCliq"></div>
+      <div class="swiper-slide"><img src="Images/E-com/Trends.png" alt="Trends"></div>
+      <!-- add more as needed -->
+    </div>
+
+    <!-- Optional arrows & pagination -->
+    <!-- <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-pagination"></div> -->
+  </div>
+</section>
+
+
+ <section class="works-section">
+    <h2 class="section-title">Our Works</h2>
+    <div class="works-grid">
+      <div class="work-card"><img src="/Images/Project-1.png" alt="Project One"></div>
+      <div class="work-card"><img src="Images/Project-2.png" alt="Project Two"></div>
+      <div class="work-card"><img src="Images/Project-3.png" alt="Project Three"></div>
+      <div class="work-card"><img src="Images/Project-4.png" alt="Project Four"></div>
+      <div class="work-card"><img src="Images/Project-5.png" alt="Project Five"></div>
+      <div class="work-card"><img src="Images/Project-6.png" alt="Project Six"></div>
+      <div class="work-card"><img src="Images/Project-7.png" alt="Project Six"></div>
+      <div class="work-card"><img src="Images/Project-8.png" alt="Project Six"></div>
+    </div>
+  </section>
+
+
+ <!-- services -->
+ <section class="services-grid-section-new">
+    <div class="service-card-new grid-card-new" id="film-production">
+        <video src="images/films.mp4" muted loop class="card-video-new"></video>
+        <div class="card-content-new">
+            <svg class="card-icon-new" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <h3>Film Production</h3>
+            <p>Short films, feature films, documentaries</p>
+        </div>
+    </div>
+
+    <div class="service-card-new grid-card-new" id="digital-content">
+        <video src="Images/digital.mp4" muted loop class="card-video-new"></video>
+        <div class="card-content-new">
+            <svg class="card-icon-new" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M15 9h-6"></path>
+                <path d="M8 13h8"></path>
+            </svg>
+            <h3>Digital Content</h3>
+            <p>Web series, OTT projects, branded content</p>
+        </div>
+    </div>
+
+    <div class="service-card-new grid-card-new" id="advertising-commercials">
+        <video src="Images/Ads.mp4" muted loop class="card-video-new"></video>
+        <div class="card-content-new">
+            <svg class="card-icon-new" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21.353l-1.896-1.724a10.023 10.023 0 01-5.744-9.352A9.99 9.99 0 0112 2a9.99 9.99 0 017.636 8.277 10.023 10.023 0 01-5.744 9.352L12 21.353z"></path>
+            </svg>
+            <h3>Advertising & Commercials</h3>
+            <p>Creative ads, films & campaigns</p>
+        </div>
+    </div>
+
+    <div class="service-card-new grid-card-new" id="post-production">
+        <video src="images/post-production.mp4" muted loop class="card-video-new"></video>
+        <div class="card-content-new">
+            <svg class="card-icon-new" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 9.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                <path d="M12 22v-1"></path>
+                <path d="M12 3v1"></path>
+                <path d="M17.5 17.5l-.75-.75"></path>
+                <path d="M6.5 6.5l-.75-.75"></path>
+                <path d="M4 12h1"></path>
+                <path d="M20 12h1"></path>
+                <path d="M6.5 17.5l-.75.75"></path>
+                <path d="M17.5 6.5l-.75.75"></path>
+            </svg>
+            <h3>Post-Production</h3>
+            <p>Editing, sound design, VFX</p>
+        </div>
+    </div>
+
+    <div class="service-card-new grid-card-new" id="portfolio">
+        <video src="Images/portfolio.mp4" muted loop class="card-video-new"></video>
+        <div class="card-content-new">
+            <svg class="card-icon-new" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <h3>Portfolio</h3>
+            <p>Character Development, Grooming, Profile Creation, and Artist Card</p>
+        </div>
+    </div>
+
+    <div class="service-card-new grid-card-new" id="brand-promotion">
+        <video src="Images/Brand shoot.mp4" muted loop class="card-video-new"></video>
+        <div class="card-content-new">
+            <svg class="card-icon-new" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+            <h3>Brand Promotion & Brand Collaboration</h3>
+            <p>Reach a wider audience and collaborate with other brands to expand your reach.</p>
+        </div>
+    </div>
+</section>
+ <!-- services -->
+    <button id="toTopBtn" aria-label="Back to top">
+  ↑
+</button>
+
+    <footer class="footer">
+        <p>&copy; 2024 Bhagwati Productions. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // gsap.utils.toArray('.animated').forEach(el => {
+        //     gsap.fromTo(el,
+        //         { y: 40, opacity: 0 },
+        //         {
+        //             y: 0, opacity: 1, duration: 1, ease: 'power3.out',
+        //             scrollTrigger: { trigger: el, start: 'top 80%' }
+        //         });
+        // });
+
+        // Custom Cursor Logic
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        const interactiveElements = document.querySelectorAll('a, button, .nominee-card, .site-card, .service-card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Scroll-triggered Animations
+        const animatedElements = document.querySelectorAll('.animated');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animatedElements.forEach(el => observer.observe(el));
+
+     
+
+
+
+     
+     
+const toTopBtn = document.getElementById('toTopBtn');
+
+// show / hide on scroll
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    toTopBtn.classList.add('show');
+  } else {
+    toTopBtn.classList.remove('show');
+  }
+});
+
+// smooth scroll to top
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+window.addEventListener('load',function(){
+  function fallbackReveal(){
+    document.querySelectorAll('.reveal').forEach((el,i)=>
+      setTimeout(()=>el.classList.add('visible'), 100 + i*60)
+    );
+  }
+  try{
+    if(typeof gsap!=='undefined' && typeof ScrollTrigger!=='undefined'){
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('.reveal').forEach((el,i)=>{
+        gsap.fromTo(el,
+          {y:30, opacity:0},
+          {
+            y:0,
+            opacity:1,
+            duration:0.9,
+            ease:'power3.out',
+            delay:i*0.05,
+            scrollTrigger:{
+              trigger:el,
+              start:'top 90%',
+              toggleActions:'play none none reverse'
+            }
+          });
+      });
+    } else fallbackReveal();
+  }catch(err){ console.warn(err); fallbackReveal(); }
+});
+
+window.addEventListener('load',function(){
+  // GSAP reveal
+  function fallbackReveal(){
+    document.querySelectorAll('.reveal').forEach((el,i)=>
+      setTimeout(()=>el.classList.add('visible'),100+i*60)
+    );
+  }
+  try{
+    if(typeof gsap!=='undefined' && typeof ScrollTrigger!=='undefined'){
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('.reveal').forEach((el,i)=>{
+        gsap.fromTo(el,{y:30,opacity:0},{
+          y:0,opacity:1,duration:0.9,ease:'power3.out',delay:i*0.05,
+          scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none reverse'}
+        });
+      });
+    } else fallbackReveal();
+  }catch(e){fallbackReveal();}
+
+  // Swiper init
+  new Swiper('.ecomSwiper',{
+    slidesPerView:4,
+    spaceBetween:40,
+    loop:true,
+    autoplay:{delay:2500,disableOnInteraction:false},
+    pagination:{el:'.swiper-pagination',clickable:true},
+    navigation:{nextEl:'.swiper-button-next',prevEl:'.swiper-button-prev'},
+    breakpoints:{
+      1100:{slidesPerView:4},
+      768:{slidesPerView:3},
+      480:{slidesPerView:2}
+    }
+  });
+});
+
+// services
+document.addEventListener("DOMContentLoaded", function() {
+    const serviceCards = document.querySelectorAll('.service-card-new.grid-card-new');
+
+    serviceCards.forEach(card => {
+        const video = card.querySelector('.card-video-new');
+
+        card.addEventListener('mouseenter', () => {
+            video.play();
+        });
+
+        card.addEventListener('mouseleave', () => {
+            video.pause();
+            video.currentTime = 0;
+        });
+    });
+});
+// services end
+// hader hider
+  const header = document.querySelector('.header');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > lastScroll && currentScroll > 50) {
+      // Scrolling down → fade out
+      header.classList.add('hidden');
+    } else {
+      // Scrolling up → fade in
+      header.classList.remove('hidden');
+    }
+
+    lastScroll = currentScroll;
+  });
+
+
+//   card our work gasp animation
+ gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray(".work-card").forEach((card) => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        }
+      });
+    });
+//   card our work gasp animation
+
+    </script>
+    <button id="toTopBtn" aria-label="Back to top">
+  ↑
+</button>
+<footer class="detailed-footer">
+    <div class="footer-grid gsap-stagger-item">
+        <div class="footer-logo-col">
+            <a href="#" class="footer-logo"><img src="/Images/Bhagwati-logo.png" alt=""></a>
+            <p class="copyright-text">&copy; 2024. All Rights Reserved.</p>
+        </div>
+
+        <div class="footer-nav-col">
+            <h3>Explore</h3>
+            <ul>
+                <li><a href="#nominees-section" class="footer-link">Featured Projects</a></li>
+                <li><a href="#recent-sites-section" class="footer-link">Recent Work</a></li>
+                <li><a href="#services-section" class="footer-link">Services</a></li>
+                <li><a href="#partners-section" class="footer-link">Partners</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-social-col">
+            <h3>Connect</h3>
+            <div class="social-links">
+                <a href="#" class="social-icon footer-link">𝕏</a>
+                <a href="#" class="social-icon footer-link">📸</a>
+                <a href="#" class="social-icon footer-link">🔗</a>
+                <a href="#" class="social-icon footer-link">▶</a>
+            </div>
+            <a href="#" class="cta-link footer-link">Start a Project →</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+</html>
